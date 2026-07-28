@@ -18,7 +18,7 @@ jobs:
             platform: linux-x64
           - os: macos-latest
             platform: darwin-arm64
-          - os: macos-latest
+          - os: macos-13
             platform: darwin-x64
           - os: windows-latest
             platform: windows-x64
@@ -38,36 +38,22 @@ jobs:
         working-directory: packages/dewcode
         run: bun run script/build.ts --single
 
-      - name: Package binary (unix)
-        if: runner.os != 'Windows'
+      - name: Package binary
         shell: bash
-        working-directory: packages/dewcode
+        working-directory: packages/dewcode/dist/dewcode-${{ matrix.platform }}/bin
         run: |
-          ls -la dist/dewcode-${{ matrix.platform }}/bin/
-          cd dist/dewcode-${{ matrix.platform }}/bin
-          tar -czf ../../dewcode-${{ matrix.platform }}.tar.gz .
-
-      - name: Package binary (windows)
-        if: runner.os == 'Windows'
-        shell: bash
-        working-directory: packages/dewcode
-        run: |
-          ls -la dist/dewcode-${{ matrix.platform }}/bin/
-          cd dist/dewcode-${{ matrix.platform }}/bin
-          7z a ../../dewcode-${{ matrix.platform }}.zip .
+          ls -la
+          if [[ "${{ matrix.platform }}" == windows-* ]]; then
+            7z a ../../../dewcode-${{ matrix.platform }}.zip .
+          else
+            tar -czf ../../../dewcode-${{ matrix.platform }}.tar.gz .
+          fi
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: dewcode-${{ matrix.platform }}
-          path: packages/dewcode/dist/dewcode-${{ matrix.platform }}.tar.gz
-
-      - name: Upload artifact (windows)
-        if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
-        with:
-          name: dewcode-${{ matrix.platform }}
-          path: packages/dewcode/dist/dewcode-${{ matrix.platform }}.zip
+          path: packages/dewcode/dist/dewcode-${{ matrix.platform }}.${{ matrix.platform == 'windows-x64' && 'zip' || 'tar.gz' }}
 
   release:
     needs: build
