@@ -1,5 +1,5 @@
 import { createOpencodeClient } from "@dewcode-ai/sdk/v2/client"
-import { DEWCode, type DEWCodeClient } from "@dewcode-ai/client/promise"
+import { DEWCode, type DEWCodeClient } from "@opencode-ai/client/promise"
 import type { ServerConnection } from "@/context/server"
 import { decode64 } from "@/utils/base64"
 

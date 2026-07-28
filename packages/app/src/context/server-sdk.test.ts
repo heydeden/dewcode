@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import { adaptServerEvent, coalesceServerEvents, enqueueServerEvent, resumeStreamAfterPageShow } from "./server-sdk"
-import type { DEWCodeEvent } from "@dewcode-ai/client/promise"
+import type { DEWCodeEvent } from "@opencode-ai/client/promise"
 import type { Event } from "@dewcode-ai/sdk/v2/client"
 
 describe("resumeStreamAfterPageShow", () => {

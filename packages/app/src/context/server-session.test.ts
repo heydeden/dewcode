@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import type { retry } from "@dewcode-ai/core/util/retry"
-import type { DEWCodeEvent, SessionApi } from "@dewcode-ai/client/promise"
+import type { DEWCodeEvent, SessionApi } from "@opencode-ai/client/promise"
 import type { Message, OpencodeClient, Part, Session } from "@dewcode-ai/sdk/v2/client"
 import { createServerSession } from "./server-session"
 import type { ServerApi } from "@/utils/server"

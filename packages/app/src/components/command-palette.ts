@@ -1,6 +1,6 @@
 import { getFilename } from "@dewcode-ai/core/util/path"
 import type { Project } from "@dewcode-ai/sdk/v2/client"
-import type { SessionInfo } from "@dewcode-ai/client/promise"
+import type { SessionInfo } from "@opencode-ai/client/promise"
 import { useDialog } from "@dewcode-ai/ui/context/dialog"
 import { createMemo, onCleanup } from "solid-js"
 import { commandPaletteOptions, useCommand, type CommandOption } from "@/context/command"

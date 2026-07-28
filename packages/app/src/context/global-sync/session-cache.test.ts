@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import type { Message, Part, PermissionRequest, QuestionRequest, SessionStatus, Todo } from "@dewcode-ai/sdk/v2/client"
-import type { FileDiffInfo } from "@dewcode-ai/client/promise"
+import type { FileDiffInfo } from "@opencode-ai/client/promise"
 import { dropSessionCaches, pickSessionCacheEvictions } from "./session-cache"
 
 const msg = (id: string, sessionID: string) =>

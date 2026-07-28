@@ -1,5 +1,5 @@
 import { parseCommentNote, readCommentMetadata } from "@/utils/comment-note"
-import type { SessionMessageInfo } from "@dewcode-ai/client/promise"
+import type { SessionMessageInfo } from "@opencode-ai/client/promise"
 import { AssistantMessage, Part, SessionStatus, UserMessage } from "@dewcode-ai/sdk/v2"
 import { groupParts, renderable, type PartGroup } from "@dewcode-ai/session-ui/message-part"
 import { TimelineRow, type SummaryDiff } from "./timeline-row"

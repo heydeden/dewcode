@@ -22,7 +22,7 @@ import type {
   ReferenceListInput,
   ReferenceListOutput,
   SessionApi,
-} from "@dewcode-ai/client/promise"
+} from "@opencode-ai/client/promise"
 import { showToast } from "@/utils/toast"
 import { getFilename } from "@dewcode-ai/core/util/path"
 import { retry } from "@dewcode-ai/core/util/retry"

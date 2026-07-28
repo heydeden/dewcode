@@ -1,6 +1,6 @@
 import type { Message, Part, PermissionRequest, QuestionRequest, SessionStatus, Todo } from "@dewcode-ai/sdk/v2/client"
-import type { FileDiffInfo } from "@dewcode-ai/client/promise"
-import type { SessionMessageInfo } from "@dewcode-ai/client/promise"
+import type { FileDiffInfo } from "@opencode-ai/client/promise"
+import type { SessionMessageInfo } from "@opencode-ai/client/promise"
 
 export const SESSION_CACHE_LIMIT = 40
 

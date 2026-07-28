@@ -1,4 +1,4 @@
-import type { IntegrationMethod, IntegrationOauthConnectOutput } from "@dewcode-ai/client/promise"
+import type { IntegrationMethod, IntegrationOauthConnectOutput } from "@opencode-ai/client/promise"
 import { Button } from "@dewcode-ai/ui/button"
 import { useDialog } from "@dewcode-ai/ui/context/dialog"
 import { Dialog } from "@dewcode-ai/ui/dialog"

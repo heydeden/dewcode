@@ -1,5 +1,5 @@
 import type { SnapshotFileDiff, VcsFileDiff } from "@dewcode-ai/sdk/v2"
-import type { FileDiffInfo } from "@dewcode-ai/client/promise"
+import type { FileDiffInfo } from "@opencode-ai/client/promise"
 import type { Message } from "@dewcode-ai/sdk/v2/client"
 
 type Diff = FileDiffInfo | SnapshotFileDiff | VcsFileDiff

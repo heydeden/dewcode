@@ -1,4 +1,4 @@
-import type { DEWCodeEvent } from "@dewcode-ai/client/promise"
+import type { DEWCodeEvent } from "@opencode-ai/client/promise"
 import type { Event } from "@dewcode-ai/sdk/v2/client"
 import { createSimpleContext } from "@dewcode-ai/ui/context"
 import { createGlobalEmitter } from "@solid-primitives/event-bus"

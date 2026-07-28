@@ -10,7 +10,7 @@ import type {
   SessionStatus,
   Todo,
 } from "@dewcode-ai/sdk/v2/client"
-import type { FileDiffInfo } from "@dewcode-ai/client/promise"
+import type { FileDiffInfo } from "@opencode-ai/client/promise"
 import type { State, VcsCache } from "./types"
 import { trimSessions } from "./session-trim"
 import { dropSessionCaches } from "./session-cache"

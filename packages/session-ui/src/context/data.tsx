@@ -1,5 +1,5 @@
 import type { Message, Session, Part, SnapshotFileDiff, SessionStatus, Provider } from "@dewcode-ai/sdk/v2"
-import type { FileDiffInfo } from "@dewcode-ai/client/promise"
+import type { FileDiffInfo } from "@opencode-ai/client/promise"
 import { createSimpleContext } from "@dewcode-ai/ui/context"
 import { PreloadMultiFileDiffResult } from "@pierre/diffs/ssr"
 

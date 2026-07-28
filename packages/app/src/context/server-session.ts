@@ -1,6 +1,6 @@
 import { Binary } from "@dewcode-ai/core/util/binary"
 import { retry } from "@dewcode-ai/core/util/retry"
-import type { DEWCodeEvent, SessionApi, SessionMessageInfo } from "@dewcode-ai/client/promise"
+import type { DEWCodeEvent, SessionApi, SessionMessageInfo } from "@opencode-ai/client/promise"
 import type {
   Message,
   OpencodeClient,
@@ -11,7 +11,7 @@ import type {
   SessionStatus,
   Todo,
 } from "@dewcode-ai/sdk/v2/client"
-import type { FileDiffInfo } from "@dewcode-ai/client/promise"
+import type { FileDiffInfo } from "@opencode-ai/client/promise"
 import { batch } from "solid-js"
 import { createStore, produce, reconcile } from "solid-js/store"
 import { message as cleanMessage } from "@/utils/diffs"

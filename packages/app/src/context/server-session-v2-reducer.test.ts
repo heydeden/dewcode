@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import type { DEWCodeEvent, SessionMessageInfo } from "@dewcode-ai/client/promise"
+import type { DEWCodeEvent, SessionMessageInfo } from "@opencode-ai/client/promise"
 import { createV2SessionReducer } from "./server-session-v2-reducer"
 
 const event = (input: object) => input as DEWCodeEvent

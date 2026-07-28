@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test"
 import { createStore } from "solid-js/store"
 import { QueryClient } from "@tanstack/solid-query"
 import type { Config, OpencodeClient, Project } from "@dewcode-ai/sdk/v2/client"
-import type { AgentApi, CatalogApi, CommandApi, ReferenceApi } from "@dewcode-ai/client/promise"
+import type { AgentApi, CatalogApi, CommandApi, ReferenceApi } from "@opencode-ai/client/promise"
 import type { NormalizedProviderListResponse } from "@dewcode-ai/session-ui/context"
 import {
   bootstrapDirectory,

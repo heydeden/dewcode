@@ -1,4 +1,4 @@
-import type { DEWCodeEvent, SessionMessageInfo, SessionPendingMessage } from "@dewcode-ai/client/promise"
+import type { DEWCodeEvent, SessionMessageInfo, SessionPendingMessage } from "@opencode-ai/client/promise"
 
 type Assistant = Extract<SessionMessageInfo, { type: "assistant" }>
 type Compaction = Extract<SessionMessageInfo, { type: "compaction" }>

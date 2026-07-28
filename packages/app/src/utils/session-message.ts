@@ -4,7 +4,7 @@ import type {
   SessionMessageInfo,
   SessionMessageShell,
   SessionMessageUser,
-} from "@dewcode-ai/client/promise"
+} from "@opencode-ai/client/promise"
 import type { AssistantMessage, FilePart, Message, Part, ToolPart, UserMessage } from "@dewcode-ai/sdk/v2"
 import { Option, Schema } from "effect"
 
