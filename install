@@ -329,10 +329,7 @@ download_and_install() {
     local tmp_dir="${TMPDIR:-/tmp}/dewcode_install_$$"
     mkdir -p "$tmp_dir"
 
-    if [[ "$os" == "windows" ]] || ! [ -t 2 ] || ! download_with_progress "$url" "$tmp_dir/$filename"; then
-        # Fallback to standard curl on Windows, non-TTY environments, or if custom progress fails
-        curl -# -L -o "$tmp_dir/$filename" "$url"
-    fi
+    curl -L --progress-bar -o "$tmp_dir/$filename" "$url"
 
     if [ "$os" = "linux" ]; then
         tar -xzf "$tmp_dir/$filename" -C "$tmp_dir"
