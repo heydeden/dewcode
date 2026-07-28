@@ -1,0 +1,105 @@
+name: Build DEWCode Binary
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: linux-x64
+          - os: ubuntu-latest
+            platform: linux-arm64
+          - os: macos-latest
+            platform: darwin-arm64
+          - os: macos-latest
+            platform: darwin-x64
+          - os: windows-latest
+            platform: windows-x64
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --ignore-scripts
+
+      - name: Build binary
+        run: bun run packages/dewcode/script/build.ts --single
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dewcode-${{ matrix.platform }}
+          path: packages/dewcode/dist/dewcode-${{ matrix.platform }}/
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: Get version
+        id: version
+        run: |
+          VERSION=$(cat packages/dewcode/package.json | grep '"version"' | head -1 | sed 's/.*"version": "\(.*\)".*/\1/')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Package binaries
+        run: |
+          cd artifacts
+          for dir in dewcode-*/; do
+            platform="${dir%-/}"
+            platform="${platform#dewcode-}"
+            cd "$dir"
+            if [[ "$platform" == windows-* ]]; then
+              7z a "../../dewcode-${platform}.zip" .
+            else
+              tar -czf "../../dewcode-${platform}.tar.gz" .
+            fi
+            cd ..
+          done
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: DEWCode v${{ steps.version.outputs.version }}
+          body: |
+            ## DEWCode v${{ steps.version.outputs.version }}
+
+            AI-powered development tool by Deden Wirjadinata.
+
+            ### Install
+            ```bash
+            curl -fsSL https://raw.githubusercontent.com/heydeden/dewcode/main/install | bash
+            ```
+
+            ### Manual Download
+            Download the binary for your platform and add to PATH.
+          files: |
+            dewcode-linux-x64.tar.gz
+            dewcode-linux-arm64.tar.gz
+            dewcode-darwin-arm64.tar.gz
+            dewcode-darwin-x64.tar.gz
+            dewcode-windows-x64.zip
+          draft: false
+          prerelease: false
