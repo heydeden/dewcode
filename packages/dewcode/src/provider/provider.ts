@@ -154,9 +154,48 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
       const options: Record<string, any> = { baseURL }
       if (apiKey) options.apiKey = apiKey
 
+      const discoverModels = async (): Promise<Record<string, Model>> => {
+        const models: Record<string, Model> = {}
+        try {
+          const headers: Record<string, string> = { "Content-Type": "application/json" }
+          if (apiKey) headers["Authorization"] = `Bearer ${apiKey}`
+          const res = await fetch(`${baseURL}/models`, { headers, signal: AbortSignal.timeout(10000) })
+          if (!res.ok) return models
+          const data = await res.json() as { data?: Array<{ id: string; owned_by?: string }> }
+          const list = data.data ?? []
+          for (const m of list) {
+            const modelID = ModelV2.ID.make(m.id)
+            models[modelID] = {
+              id: modelID,
+              providerID: ProviderV2.ID.make("9router"),
+              api: { id: m.id, url: baseURL, npm: "@ai-sdk/openai-compatible" },
+              name: m.id,
+              family: m.owned_by,
+              capabilities: {
+                temperature: true,
+                reasoning: false,
+                attachment: false,
+                toolcall: true,
+                input: { text: true, audio: false, image: false, video: false, pdf: false },
+                output: { text: true, audio: false, image: false, video: false, pdf: false },
+                interleaved: false,
+              },
+              cost: { input: 0, output: 0, cache: { read: 0, write: 0 } },
+              limit: { context: 128000, output: 4096 },
+              status: "active",
+              options: {},
+              headers: {},
+              release_date: new Date().toISOString().split("T")[0],
+            }
+          }
+        } catch {}
+        return models
+      }
+
       return {
         autoload: true,
         options,
+        discoverModels,
       }
     }),
   }
@@ -778,10 +817,10 @@ const layer = Layer.effect(
           const providerID = ProviderV2.ID.make(id)
           if (disabled.has(providerID)) continue
           const data = database[providerID]
-          if (!data) {
+          if (!data && !providers[providerID]) {
             continue
           }
-          const result = yield* fn(data)
+          const result = yield* fn(data ?? providers[providerID])
           if (result && (result.autoload || providers[providerID])) {
             if (result.getModel) modelLoaders[providerID] = result.getModel
             if (result.vars) varsLoaders[providerID] = result.vars
@@ -810,6 +849,20 @@ const layer = Layer.effect(
               for (const [modelID, model] of Object.entries(discovered)) {
                 if (!providers[gitlab].models[modelID]) {
                   providers[gitlab].models[modelID] = model
+                }
+              }
+            } catch (e) {}
+          })
+        }
+
+        const router = ProviderV2.ID.make("9router")
+        if (discoveryLoaders[router] && providers[router] && isProviderAllowed(router)) {
+          yield* Effect.promise(async () => {
+            try {
+              const discovered = await discoveryLoaders[router]()
+              for (const [modelID, model] of Object.entries(discovered)) {
+                if (!providers[router].models[modelID]) {
+                  providers[router].models[modelID] = model
                 }
               }
             } catch (e) {}
