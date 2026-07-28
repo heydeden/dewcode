@@ -570,9 +570,22 @@ const layer = Layer.effect(
             return
           }
           const match = database[providerID]
-          if (!match) return
-          // @ts-expect-error
-          providers[providerID] = mergeDeep(match, provider)
+          if (match) {
+            // @ts-expect-error
+            providers[providerID] = mergeDeep(match, provider)
+          } else {
+            // Create provider from config even when models.dev data is missing
+            const base: Info = {
+              id: providerID,
+              name: provider.name ?? String(providerID),
+              source: provider.source ?? "config",
+              env: provider.env ?? [],
+              options: {},
+              models: {},
+            }
+            // @ts-expect-error
+            providers[providerID] = mergeDeep(base, provider)
+          }
         }
 
         // load plugins first so config() hook runs before reading cfg.provider
