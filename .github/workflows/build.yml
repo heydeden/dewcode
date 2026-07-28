@@ -42,9 +42,9 @@ jobs:
         run: |
           ls -la
           if [[ "${{ matrix.platform }}" == windows-* ]]; then
-            7z a ../../../dewcode-${{ matrix.platform }}.zip .
+            7z a ../../dewcode-${{ matrix.platform }}.zip .
           else
-            tar -czf ../../../dewcode-${{ matrix.platform }}.tar.gz .
+            tar -czf ../../dewcode-${{ matrix.platform }}.tar.gz .
           fi
 
       - name: Upload artifact (unix)
