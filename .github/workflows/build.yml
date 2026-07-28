@@ -38,11 +38,21 @@ jobs:
       - name: Build binary
         run: bun run packages/dewcode/script/build.ts --single
 
+      - name: Package binary
+        shell: bash
+        run: |
+          cd packages/dewcode/dist/dewcode-${{ matrix.platform }}/bin
+          if [[ "${{ matrix.platform }}" == windows-* ]]; then
+            7z a ../../../dewcode-${{ matrix.platform }}.zip .
+          else
+            tar -czf ../../../dewcode-${{ matrix.platform }}.tar.gz .
+          fi
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: dewcode-${{ matrix.platform }}
-          path: packages/dewcode/dist/dewcode-${{ matrix.platform }}/
+          path: packages/dewcode/dist/dewcode-${{ matrix.platform }}.tar.gz
 
   release:
     needs: build
@@ -56,6 +66,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts/
+          pattern: dewcode-*
 
       - name: Get version
         id: version
@@ -63,20 +74,13 @@ jobs:
           VERSION=$(cat packages/dewcode/package.json | grep '"version"' | head -1 | sed 's/.*"version": "\(.*\)".*/\1/')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Package binaries
+      - name: Prepare release files
         run: |
-          cd artifacts
-          for dir in dewcode-*/; do
-            platform="${dir%-/}"
-            platform="${platform#dewcode-}"
-            cd "$dir"
-            if [[ "$platform" == windows-* ]]; then
-              7z a "../../dewcode-${platform}.zip" .
-            else
-              tar -czf "../../dewcode-${platform}.tar.gz" .
-            fi
-            cd ..
+          mkdir -p release
+          find artifacts/ -name "*.tar.gz" -o -name "*.zip" | while read f; do
+            cp "$f" release/
           done
+          ls -la release/
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -95,11 +99,6 @@ jobs:
 
             ### Manual Download
             Download the binary for your platform and add to PATH.
-          files: |
-            dewcode-linux-x64.tar.gz
-            dewcode-linux-arm64.tar.gz
-            dewcode-darwin-arm64.tar.gz
-            dewcode-darwin-x64.tar.gz
-            dewcode-windows-x64.zip
+          files: release/*
           draft: false
           prerelease: false
