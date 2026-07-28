@@ -355,6 +355,43 @@ else
     download_and_install
 fi
 
+# Create default config for 9router
+CONFIG_DIR="$HOME/.config/dewcode"
+CONFIG_FILE="$CONFIG_DIR/dewcode.json"
+SKILLS_DIR="$CONFIG_DIR/skills"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+    mkdir -p "$CONFIG_DIR"
+    mkdir -p "$SKILLS_DIR"
+    cat > "$CONFIG_FILE" << 'CONFIGEOF'
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "9router": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:20128/v1"
+      },
+      "models": {
+        "Gratis": {
+          "name": "Gratis",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        }
+      }
+    }
+  },
+  "model": "9router/Gratis",
+  "skills": {
+    "paths": ["/root/.config/dewcode/skills"]
+  }
+}
+CONFIGEOF
+    print_message info "${MUTED}Created default config at ${NC}$CONFIG_FILE"
+fi
+
 
 add_to_path() {
     local config_file=$1
