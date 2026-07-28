@@ -371,21 +371,8 @@ if [ ! -f "$CONFIG_FILE" ]; then
       "npm": "@ai-sdk/openai-compatible",
       "options": {
         "baseURL": "http://127.0.0.1:20128/v1"
-      },
-      "models": {
-        "Gratis": {
-          "name": "Gratis",
-          "modalities": {
-            "input": ["text", "image"],
-            "output": ["text"]
-          }
-        }
       }
     }
-  },
-  "model": "9router/Gratis",
-  "skills": {
-    "paths": ["/root/.config/dewcode/skills"]
   }
 }
 CONFIGEOF
