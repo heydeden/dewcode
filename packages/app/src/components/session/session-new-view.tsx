@@ -4,7 +4,6 @@ import { useSync } from "@/context/sync"
 import { useSDK } from "@/context/sdk"
 import { useLanguage } from "@/context/language"
 import { Icon } from "@dewcode-ai/ui/icon"
-import { Mark } from "@dewcode-ai/ui/logo"
 import { getDirectory, getFilename } from "@dewcode-ai/core/util/path"
 
 const MAIN_WORKTREE = "main"

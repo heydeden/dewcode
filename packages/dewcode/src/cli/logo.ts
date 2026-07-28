@@ -1,1 +1,1 @@
-export * from "@dewcode-ai/tui/logo"
+export const logo = { left: [], right: [] }

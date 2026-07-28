@@ -28,7 +28,6 @@ import { resetZoom, setPinchZoomEnabled, webviewZoom, zoomIn, zoomOut } from "./
 import { windowFullscreen } from "./window-fullscreen"
 import { availableStartupServer, readyWslConnections } from "./wsl/connections"
 import "./styles.css"
-import { Splash } from "@dewcode-ai/ui/logo"
 import { useTheme } from "@dewcode-ai/ui/theme/context"
 
 const root = document.getElementById("root")
@@ -324,14 +323,6 @@ window.api.onMenuCommand((id) => {
 })
 listenForDeepLinks()
 
-function LoadingSplash() {
-  return (
-    <div class="h-dvh w-screen flex flex-col items-center justify-center bg-background-base">
-      <Splash class="w-16 h-20 opacity-50 animate-pulse" />
-    </div>
-  )
-}
-
 function DesktopRoot(props: { windowState: DesktopWindowState }) {
   const platform = createPlatform(props.windowState)
   const loadLocale = async () => {
@@ -412,7 +403,7 @@ function DesktopRoot(props: { windowState: DesktopWindowState }) {
       ServerConnection.Key.make(availableStartupServer(defaultServer.latest, wslServers.data)),
     )
     return (
-      <Show when={ready()} fallback={<LoadingSplash />}>
+      <Show when={ready()}>
         <Show when={effectiveDefaultServer()} keyed>
           {(key) => (
             <AppInterface
@@ -460,7 +451,7 @@ render(() => {
   })
 
   return (
-    <Show when={windowState.latest} fallback={<LoadingSplash />} keyed>
+    <Show when={windowState.latest} keyed>
       {(state) => <DesktopRoot windowState={state} />}
     </Show>
   )

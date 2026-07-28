@@ -13,10 +13,7 @@ export const dict = {
   "nav.home": "Home",
   "nav.openMenu": "Open menu",
   "nav.getStartedFree": "Get started for free",
-  "nav.logoAlt": "DEWCode",
 
-  "nav.context.copyLogo": "Copy logo as SVG",
-  "nav.context.copyWordmark": "Copy wordmark as SVG",
   "nav.context.brandAssets": "Brand assets",
 
   "footer.github": "GitHub",

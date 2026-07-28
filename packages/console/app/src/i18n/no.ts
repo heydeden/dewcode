@@ -15,10 +15,7 @@ export const dict = {
   "nav.home": "Hjem",
   "nav.openMenu": "Åpne meny",
   "nav.getStartedFree": "Kom i gang gratis",
-  "nav.logoAlt": "DEWCode",
 
-  "nav.context.copyLogo": "Kopier logo som SVG",
-  "nav.context.copyWordmark": "Kopier wordmark som SVG",
   "nav.context.brandAssets": "Merkevareressurser",
 
   "footer.github": "GitHub",

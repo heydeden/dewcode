@@ -15,10 +15,7 @@ export const dict = {
   "nav.home": "ホーム",
   "nav.openMenu": "メニューを開く",
   "nav.getStartedFree": "無料ではじめる",
-  "nav.logoAlt": "DEWCode",
 
-  "nav.context.copyLogo": "ロゴをSVGでコピー",
-  "nav.context.copyWordmark": "ワードマークをSVGでコピー",
   "nav.context.brandAssets": "ブランド素材",
 
   "footer.github": "GitHub",

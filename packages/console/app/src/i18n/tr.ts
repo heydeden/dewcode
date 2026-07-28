@@ -15,10 +15,7 @@ export const dict = {
   "nav.home": "Ana sayfa",
   "nav.openMenu": "Menüyü aç",
   "nav.getStartedFree": "Ücretsiz başla",
-  "nav.logoAlt": "DEWCode",
 
-  "nav.context.copyLogo": "Logoyu SVG olarak kopyala",
-  "nav.context.copyWordmark": "Wordmark'ı SVG olarak kopyala",
   "nav.context.brandAssets": "Marka varlıkları",
 
   "footer.github": "GitHub",
