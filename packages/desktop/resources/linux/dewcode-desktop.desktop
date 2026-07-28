@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=DEWCode
+Exec=/opt/DEWCode/ai.dewcode.desktop %U
+Terminal=false
+Type=Application
+Icon=ai.dewcode.desktop
+StartupWMClass=ai.dewcode.desktop
+NoDisplay=true
+Comment=AI coding agent
+Categories=Development;
