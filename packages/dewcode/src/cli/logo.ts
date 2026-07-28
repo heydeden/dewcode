@@ -1,1 +1,2 @@
 export const logo = { left: [], right: [] }
+export const go = { left: [], right: [] }
