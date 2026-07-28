@@ -1,17 +1,8 @@
+<p align="center"><strong>DEWCode</strong> — The open source AI coding agent.</p>
 <p align="center">
-  <a href="https://dewcode.dev">
-    <picture>
-      <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
-      <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="DEWCode logo">
-    </picture>
-  </a>
-</p>
-<p align="center">The open source AI coding agent.</p>
-<p align="center">
-  <a href="https://dewcode.dev/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
+  <a href="https://github.com/heydeden/dewcode"><img alt="GitHub" src="https://img.shields.io/github/stars/heydeden/dewcode?style=flat-square" /></a>
   <a href="https://www.npmjs.com/package/dewcode-ai"><img alt="npm" src="https://img.shields.io/npm/v/dewcode-ai?style=flat-square" /></a>
-  <a href="https://github.com/dedenwirjadinata/dewcode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/dedenwirjadinata/dewcode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://github.com/heydeden/dewcode/actions/workflows/build.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/heydeden/dewcode/build.yml?style=flat-square&branch=main" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +30,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![DEWCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://dewcode.dev)
+[![DEWCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://github.com/heydeden/dewcode)
 
 ---
 
@@ -47,18 +38,18 @@
 
 ```bash
 # YOLO
-curl -fsSL https://dewcode.dev/install | bash
+curl -fsSL https://raw.githubusercontent.com/heydeden/dewcode/main/install | bash
 
 # Package managers
 npm i -g dewcode-ai@latest        # or bun/pnpm/yarn
 scoop install dewcode             # Windows
 choco install dewcode             # Windows
-brew install anomalyco/tap/dewcode # macOS and Linux (recommended, always up to date)
+brew install heydeden/tap/dewcode # macOS and Linux (recommended, always up to date)
 brew install dewcode              # macOS and Linux (official brew formula, updated less)
 sudo pacman -S dewcode            # Arch Linux (Stable)
 paru -S dewcode-bin               # Arch Linux (Latest from AUR)
 mise use -g dewcode               # Any OS
-nix run nixpkgs#dewcode           # or github:dedenwirjadinata/dewcode for latest dev branch
+nix run nixpkgs#dewcode           # or github:heydeden/dewcode for latest dev branch
 ```
 
 > [!TIP]
@@ -66,7 +57,7 @@ nix run nixpkgs#dewcode           # or github:dedenwirjadinata/dewcode for lates
 
 ### Desktop App (BETA)
 
-DEWCode is also available as a desktop application. Download directly from the [releases page](https://github.com/dedenwirjadinata/dewcode/releases) or [dewcode.dev/download](https://dewcode.dev/download).
+DEWCode is also available as a desktop application. Download directly from the [releases page](https://github.com/heydeden/dewcode/releases).
 
 | Platform              | Download                           |
 | --------------------- | ---------------------------------- |
@@ -93,8 +84,8 @@ The install script respects the following priority order for the installation pa
 
 ```bash
 # Examples
-DEWCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://dewcode.dev/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://dewcode.dev/install | bash
+DEWCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://raw.githubusercontent.com/heydeden/dewcode/main/install | bash
+XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://raw.githubusercontent.com/heydeden/dewcode/main/install | bash
 ```
 
 ### Agents
@@ -110,11 +101,11 @@ DEWCode includes two built-in agents you can switch between with the `Tab` key.
 Also included is a **general** subagent for complex searches and multistep tasks.
 This is used internally and can be invoked using `@general` in messages.
 
-Learn more about [agents](https://dewcode.dev/docs/agents).
+Learn more about [agents](https://github.com/heydeden/dewcode).
 
 ### Documentation
 
-For more info on how to configure DEWCode, [**head over to our docs**](https://dewcode.dev/docs).
+For more info on how to configure DEWCode, [**head over to our docs**](https://github.com/heydeden/dewcode).
 
 ### Contributing
 
