@@ -366,6 +366,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
     cat > "$CONFIG_FILE" << 'CONFIGEOF'
 {
   "$schema": "https://opencode.ai/config.json",
+  "enabled_providers": ["9router"],
   "provider": {
     "9router": {
       "npm": "@ai-sdk/openai-compatible",
