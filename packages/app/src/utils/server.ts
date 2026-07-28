@@ -1,5 +1,5 @@
 import { createOpencodeClient } from "@dewcode-ai/sdk/v2/client"
-import { DEWCode, type DEWCodeClient } from "@opencode-ai/client/promise"
+import { OpenCode, type OpenCodeClient } from "@opencode-ai/client/promise"
 import type { ServerConnection } from "@/context/server"
 import { decode64 } from "@/utils/base64"
 
@@ -44,8 +44,8 @@ export function createSdkForServer({
 export function createApiForServer(input: {
   server: ServerConnection.HttpBase
   fetch?: typeof globalThis.fetch
-}): DEWCodeClient {
-  return DEWCode.make({
+}): OpenCodeClient {
+  return OpenCode.make({
     baseUrl: input.server.url,
     fetch: input.fetch,
     headers: input.server.password
@@ -59,4 +59,4 @@ export function createApiForServer(input: {
   })
 }
 
-export type ServerApi = DEWCodeClient
+export type ServerApi = OpenCodeClient

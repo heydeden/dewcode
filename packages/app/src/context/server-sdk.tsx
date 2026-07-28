@@ -1,4 +1,4 @@
-import type { DEWCodeEvent } from "@opencode-ai/client/promise"
+import type { OpenCodeEvent } from "@opencode-ai/client/promise"
 import type { Event } from "@dewcode-ai/sdk/v2/client"
 import { createSimpleContext } from "@dewcode-ai/ui/context"
 import { createGlobalEmitter } from "@solid-primitives/event-bus"
@@ -18,14 +18,14 @@ const isAbortError = (error: unknown) =>
   error !== null && typeof error === "object" && "name" in error && error.name === "AbortError"
 
 const isStreamClosed = (error: unknown, signal?: AbortSignal) => isAbortError(error) || signal?.aborted === true
-export type ServerEvent = Event & { current?: DEWCodeEvent }
+export type ServerEvent = Event & { current?: OpenCodeEvent }
 type QueuedServerEvent = { directory: string; payload: ServerEvent }
 type CurrentDelta = Extract<
-  DEWCodeEvent,
+  OpenCodeEvent,
   { type: "session.text.delta" | "session.reasoning.delta" | "session.tool.input.delta" | "session.compaction.delta" }
 >
 
-export function adaptServerEvent(event: DEWCodeEvent): ServerEvent {
+export function adaptServerEvent(event: OpenCodeEvent): ServerEvent {
   if (event.type === "permission.v2.asked") {
     return {
       id: event.id,
@@ -138,7 +138,7 @@ export function coalesceServerEvents(events: QueuedServerEvent[]) {
   return output
 }
 
-function currentDelta(event: DEWCodeEvent | undefined): CurrentDelta | undefined {
+function currentDelta(event: OpenCodeEvent | undefined): CurrentDelta | undefined {
   if (
     event?.type === "session.text.delta" ||
     event?.type === "session.reasoning.delta" ||
