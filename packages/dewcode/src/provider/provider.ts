@@ -859,7 +859,7 @@ const layer = Layer.effect(
             }
           }
 
-          if (Object.keys(provider.models).length === 0) {
+          if (Object.keys(provider.models).length === 0 && provider.source !== "custom" && provider.source !== "config") {
             delete providers[providerID]
             continue
           }
