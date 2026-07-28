@@ -188,7 +188,14 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
               release_date: new Date().toISOString().split("T")[0],
             }
           }
-        } catch {}
+        } catch {
+          // 9router fetch failed (connection refused / timeout) — user forgot to start 9router
+        }
+        if (Object.keys(models).length === 0) {
+          throw new Error(
+            '9router service tidak aktif. Jalankan perintah "9router" di terminal untuk mengaktifkannya.',
+          )
+        }
         return models
       }
 
@@ -327,7 +334,7 @@ export function toPublicInfo(provider: Info): Info {
 }
 
 export function defaultModelIDs<T extends { models: Record<string, { id: string }> }>(providers: Record<string, T>) {
-  return mapValues(providers, (item) => sort(Object.values(item.models))[0].id)
+  return mapValues(providers, (item) => sort(Object.values(item.models))[0]?.id)
 }
 
 export class ModelNotFoundError extends Schema.TaggedErrorClass<ModelNotFoundError>()("ProviderModelNotFoundError", {
@@ -858,14 +865,12 @@ const layer = Layer.effect(
         const router = ProviderV2.ID.make("9router")
         if (discoveryLoaders[router] && providers[router] && isProviderAllowed(router)) {
           yield* Effect.promise(async () => {
-            try {
-              const discovered = await discoveryLoaders[router]()
-              for (const [modelID, model] of Object.entries(discovered)) {
-                if (!providers[router].models[modelID]) {
-                  providers[router].models[modelID] = model
-                }
+            const discovered = await discoveryLoaders[router]()
+            for (const [modelID, model] of Object.entries(discovered)) {
+              if (!providers[router].models[modelID]) {
+                providers[router].models[modelID] = model
               }
-            } catch (e) {}
+            }
           })
         }
 

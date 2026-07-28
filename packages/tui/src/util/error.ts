@@ -30,8 +30,12 @@ export function cliErrorMessage(input: unknown): string | undefined {
   }
 
   const provider = configData(input, "ProviderInitError")
-  if (provider)
-    return `Failed to initialize provider "${field(provider, "providerID")}". Check credentials and configuration.`
+  if (provider) {
+    const providerID = field(provider, "providerID")
+    if (providerID === "9router")
+      return '9router service tidak aktif. Jalankan perintah "9router" di terminal untuk mengaktifkannya.'
+    return `Failed to initialize provider "${providerID}". Check credentials and configuration.`
+  }
 
   const json = configData(input, "ConfigJsonError")
   if (json) {
@@ -72,6 +76,11 @@ export function cliErrorMessage(input: unknown): string | undefined {
     const name = isRecord(input.data) ? field(input.data, "name") : undefined
     return `MCP server "${name}" failed. Note, dewcode does not support MCP authentication yet.`
   }
+
+  if (input instanceof Error && input.message.includes("9router service tidak aktif")) {
+    return input.message
+  }
+
   return undefined
 }
 

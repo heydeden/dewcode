@@ -25,6 +25,21 @@ export const errorLayer = HttpRouter.middleware<{ handles: unknown }>()((effect)
         return Effect.succeed(HttpServerResponse.jsonUnsafe(error.toObject(), { status: 400 }))
       }
 
+      // Detect 9router service not running — show helpful message instead of generic error
+      if (error instanceof Error && error.message.includes("9router service tidak aktif")) {
+        return Effect.succeed(
+          HttpServerResponse.jsonUnsafe(
+            {
+              _tag: "UnknownError",
+              data: { message: error.message },
+              message: error.message,
+              ref: "9router_service_inactive",
+            },
+            { status: 503 },
+          ),
+        )
+      }
+
       const ref = `err_${crypto.randomUUID().slice(0, 8)}`
 
       return Effect.logError("failed", { ref, error, cause: Cause.pretty(cause) }).pipe(

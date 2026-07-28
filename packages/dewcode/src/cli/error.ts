@@ -72,7 +72,11 @@ export function FormatError(input: unknown): string | undefined {
   // ProviderInitError: { providerID: string }
   const providerInit = configData(input, "ProviderInitError")
   if (providerInit) {
-    return `Failed to initialize provider "${stringField(providerInit, "providerID")}". Check credentials and configuration.`
+    const providerID = stringField(providerInit, "providerID")
+    if (providerID === "9router") {
+      return '9router service tidak aktif. Jalankan perintah "9router" di terminal untuk mengaktifkannya.'
+    }
+    return `Failed to initialize provider "${providerID}". Check credentials and configuration.`
   }
 
   // ConfigJsonError: { path: string, message?: string }
@@ -122,6 +126,12 @@ export function FormatError(input: unknown): string | undefined {
   if (isTaggedError(input, "UICancelledError") || NamedError.hasName(input, "UICancelledError")) {
     return ""
   }
+
+  // 9router service not running — plain Error with friendly message
+  if (input instanceof Error && input.message.includes("9router service tidak aktif")) {
+    return input.message
+  }
+
   return undefined
 }
 
