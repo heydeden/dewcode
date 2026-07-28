@@ -1,4 +1,4 @@
-export * as DEWCode from "./dewcode"
+export * as DEWCode from "./opencode"
 export * as Tool from "./tool"
 
 export { ClientError } from "@dewcode-ai/client/effect"
