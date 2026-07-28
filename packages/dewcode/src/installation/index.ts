@@ -123,8 +123,8 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
     )
 
     const getBrewFormula = Effect.fnUntraced(function* () {
-      const tapFormula = yield* text(["brew", "list", "--formula", "dedenwirjadinata/tap/dewcode"])
-      if (tapFormula.includes("dewcode")) return "dedenwirjadinata/tap/dewcode"
+      const tapFormula = yield* text(["brew", "list", "--formula", "heydeden/tap/dewcode"])
+      if (tapFormula.includes("dewcode")) return "heydeden/tap/dewcode"
       const coreFormula = yield* text(["brew", "list", "--formula", "dewcode"])
       if (coreFormula.includes("dewcode")) return "dewcode"
       return "dewcode"
@@ -144,7 +144,9 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
 
     const upgradeCurl = Effect.fnUntraced(
       function* (target: string) {
-        const response = yield* httpOk.execute(HttpClientRequest.get("https://dewcode.dev/install"))
+        const response = yield* httpOk.execute(
+          HttpClientRequest.get("https://raw.githubusercontent.com/heydeden/dewcode/main/install"),
+        )
         const body = yield* response.text
         const bodyBytes = new TextEncoder().encode(body)
         const shell = yield* upgradeScriptShell()
@@ -255,7 +257,7 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
         }
 
         const response = yield* httpOk.execute(
-          HttpClientRequest.get("https://api.github.com/repos/dedenwirjadinata/dewcode/releases/latest").pipe(
+          HttpClientRequest.get("https://api.github.com/repos/heydeden/dewcode/releases/latest").pipe(
             HttpClientRequest.acceptJson,
           ),
         )
@@ -281,12 +283,12 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
             const formula = yield* getBrewFormula()
             const env = { HOMEBREW_NO_AUTO_UPDATE: "1" }
             if (formula.includes("/")) {
-              const tap = yield* run(["brew", "tap", "anomalyco/tap"], { env })
+              const tap = yield* run(["brew", "tap", "heydeden/tap"], { env })
               if (tap.code !== 0) {
                 upgradeResult = tap
                 break
               }
-              const repo = yield* text(["brew", "--repo", "anomalyco/tap"])
+              const repo = yield* text(["brew", "--repo", "heydeden/tap"])
               const dir = repo.trim()
               if (dir) {
                 const pull = yield* run(["git", "pull", "--ff-only"], { cwd: dir, env })
