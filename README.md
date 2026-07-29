@@ -41,6 +41,15 @@ curl -fsSL https://raw.githubusercontent.com/heydeden/dewcode/main/install | bas
 dewcode
 ```
 
+## Update
+
+```bash
+cd /path/to/dewcode
+git pull
+bun install
+npm install -g .
+```
+
 ## Quick Start
 
 ```bash
