@@ -1,120 +1,166 @@
-<p align="center"><strong>DEWCode</strong> — The open source AI coding agent.</p>
+<p align="center"><strong>DEWCode</strong> — AI coding assistant in your terminal.</p>
+
 <p align="center">
   <a href="https://github.com/heydeden/dewcode"><img alt="GitHub" src="https://img.shields.io/github/stars/heydeden/dewcode?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/dewcode-ai"><img alt="npm" src="https://img.shields.io/npm/v/dewcode-ai?style=flat-square" /></a>
-  <a href="https://github.com/heydeden/dewcode/actions/workflows/build.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/heydeden/dewcode/build.yml?style=flat-square&branch=main" /></a>
+  <a href="https://github.com/heydeden/dewcode/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/heydeden/dewcode?style=flat-square" /></a>
 </p>
-
-<p align="center">
-  <a href="README.md">English</a> |
-  <a href="README.zh.md">简体中文</a> |
-  <a href="README.zht.md">繁體中文</a> |
-  <a href="README.ko.md">한국어</a> |
-  <a href="README.de.md">Deutsch</a> |
-  <a href="README.es.md">Español</a> |
-  <a href="README.fr.md">Français</a> |
-  <a href="README.it.md">Italiano</a> |
-  <a href="README.da.md">Dansk</a> |
-  <a href="README.ja.md">日本語</a> |
-  <a href="README.pl.md">Polski</a> |
-  <a href="README.ru.md">Русский</a> |
-  <a href="README.bs.md">Bosanski</a> |
-  <a href="README.ar.md">العربية</a> |
-  <a href="README.no.md">Norsk</a> |
-  <a href="README.br.md">Português (Brasil)</a> |
-  <a href="README.th.md">ไทย</a> |
-  <a href="README.tr.md">Türkçe</a> |
-  <a href="README.uk.md">Українська</a> |
-  <a href="README.bn.md">বাংলা</a> |
-  <a href="README.gr.md">Ελληνικά</a> |
-  <a href="README.vi.md">Tiếng Việt</a>
-</p>
-
-[![DEWCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://github.com/heydeden/dewcode)
 
 ---
 
-### Installation
+**DEWCode** is a terminal AI coding assistant with two modes: **Plan** (read-only) and **Build** (full access). It includes a multi-agent system, skill system, and supports 9router as its default provider.
+
+## Features
+
+- **Plan Mode** — Read-only analysis, safe for exploring unfamiliar codebases
+- **Build Mode** — Full access to read, write, and execute code
+- **Multi-agent** — Switch between specialized agents with different capabilities
+- **Skill System** — Load technical skills on-demand (security, API, cloud, etc.)
+- **Cross-platform** — Works on Linux, macOS, Windows, and Termux
+
+## Install
+
+### From Source (recommended)
+
+**Prerequisites:** [Node.js](https://nodejs.org) 18+ and [Bun](https://bun.sh) (for dev mode)
 
 ```bash
-# YOLO
+git clone https://github.com/heydeden/dewcode
+cd dewcode
+bun install
+bun dev
+```
+
+### Global Install (for daily use)
+
+```bash
+git clone https://github.com/heydeden/dewcode
+cd dewcode
+bun install
+npm install -g .
+dewcode  # runs from anywhere
+```
+
+### Curl Install (Linux/macOS)
+
+```bash
 curl -fsSL https://raw.githubusercontent.com/heydeden/dewcode/main/install | bash
-
-# Package managers
-npm i -g dewcode-ai@latest        # or bun/pnpm/yarn
-scoop install dewcode             # Windows
-choco install dewcode             # Windows
-brew install heydeden/tap/dewcode # macOS and Linux (recommended, always up to date)
-brew install dewcode              # macOS and Linux (official brew formula, updated less)
-sudo pacman -S dewcode            # Arch Linux (Stable)
-paru -S dewcode-bin               # Arch Linux (Latest from AUR)
-mise use -g dewcode               # Any OS
-nix run nixpkgs#dewcode           # or github:heydeden/dewcode for latest dev branch
 ```
 
-> [!TIP]
-> Remove versions older than 0.1.x before installing.
-
-### Desktop App (BETA)
-
-DEWCode is also available as a desktop application. Download directly from the [releases page](https://github.com/heydeden/dewcode/releases).
-
-| Platform              | Download                           |
-| --------------------- | ---------------------------------- |
-| macOS (Apple Silicon) | `dewcode-desktop-mac-arm64.dmg`   |
-| macOS (Intel)         | `dewcode-desktop-mac-x64.dmg`     |
-| Windows               | `dewcode-desktop-windows-x64.exe` |
-| Linux                 | `.deb`, `.rpm`, or `.AppImage`     |
+## Quick Start
 
 ```bash
-# macOS (Homebrew)
-brew install --cask dewcode-desktop
-# Windows (Scoop)
-scoop bucket add extras; scoop install extras/dewcode-desktop
+dewcode                        # interactive mode
+dewcode -t "explain main.go"   # single task
+dewcode --doctor               # check install status
 ```
 
-#### Installation Directory
+### Commands
 
-The install script respects the following priority order for the installation path:
+| Command | Description |
+|---------|-------------|
+| `/plan` | Switch to plan mode (read-only) |
+| `/build` | Switch to build mode (full access) |
+| `/mode` | Show current mode |
+| `/skill <name>` | Load a skill |
+| `/skills` | List available skills |
+| `/unskill <name>` | Unload a skill |
+| `/agent <name>` | Switch agent |
+| `/agents` | List agents |
+| `/default` | Back to default |
+| `/clear` | Reset conversation |
+| `/help` | Show help |
+| `/exit` | Exit |
 
-1. `$DEWCODE_INSTALL_DIR` - Custom installation directory
-2. `$XDG_BIN_DIR` - XDG Base Directory Specification compliant path
-3. `$HOME/bin` - Standard user binary directory (if it exists or can be created)
-4. `$HOME/.dewcode/bin` - Default fallback
+### Available Agents
+
+- `@fullstack-developer` — Full-stack development agent
+- `@sec-bounty` — Bug bounty hunting agent
+- `@sec-web` — Web security audit agent
+- `@sec-polar` — Hunt-fix cycle agent
+
+### Available Skills
+
+- `sec-api` — API security testing
+- `sec-recon` — Reconnaissance & OSINT
+- `sec-exploit` — Exploit payloads & techniques
+- `sec-cloud` — Cloud attack vectors
+- `sec-bypass` — WAF & filter bypass
+- `sec-proxy` — Proxy & Tor configuration
+- `md2pdf` — Markdown to PDF conversion
+
+## Configuration
+
+### API Key
 
 ```bash
-# Examples
-DEWCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://raw.githubusercontent.com/heydeden/dewcode/main/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://raw.githubusercontent.com/heydeden/dewcode/main/install | bash
+# Option 1: CLI flags
+dewcode --api-key <key> --model <model>
+
+# Option 2: Environment variables
+export DEWCODE_API_KEY=<key>
+export DEWCODE_MODEL=<model>
+
+# Option 3: Config file (~/.config/dewcode/dewcode.json)
 ```
 
-### Agents
+### Config File
 
-DEWCode includes two built-in agents you can switch between with the `Tab` key.
+Located at `~/.config/dewcode/dewcode.json`:
 
-- **build** - Default, full-access agent for development work
-- **plan** - Read-only agent for analysis and code exploration
-  - Denies file edits by default
-  - Asks permission before running bash commands
-  - Ideal for exploring unfamiliar codebases or planning changes
+```json
+{
+  "enabled_providers": ["9router"],
+  "provider": {
+    "9router": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:20128/v1"
+      }
+    }
+  }
+}
+```
 
-Also included is a **general** subagent for complex searches and multistep tasks.
-This is used internally and can be invoked using `@general` in messages.
+### Running 9router
 
-Learn more about [agents](https://github.com/heydeden/dewcode).
+DEWCode uses [9router](https://github.com/heydeden/9router) as its default provider.
 
-### Documentation
+```bash
+# Install 9router
+npm install -g 9router
 
-For more info on how to configure DEWCode, [**head over to our docs**](https://github.com/heydeden/dewcode).
+# Run 9router (default port 20128)
+node $(npm root -g)/9router/cli.js --tray --skip-update -p 20128
+```
 
-### Contributing
+## Project Structure
 
-If you're interested in contributing to DEWCode, please read our [contributing docs](./CONTRIBUTING.md) before submitting a pull request.
+```
+dewcode/
+├── packages/dewcode/   # CLI & TUI entry point
+├── packages/core/      # Core logic
+├── packages/tui/       # Terminal UI components
+├── packages/ui/        # Shared UI primitives
+├── packages/plugin/    # Plugin system
+├── packages/llm/       # LLM provider integration
+├── packages/sdk/       # SDK
+├── packages/server/    # Server
+└── packages/schema/    # Type schemas
+```
 
-### Building on DEWCode
+## Development
 
-If you are working on a project that's related to DEWCode and is using "dewcode" as part of its name, for example "dewcode-dashboard" or "dewcode-mobile", please add a note to your README to clarify that it is not built by the DEWCode team and is not affiliated with us in any way.
+```bash
+# Dev mode (interactive TUI)
+bun dev
 
----
+# Type check
+bun turbo typecheck
 
-**Join our community** [Discord](https://discord.gg/dewcode) | [X.com](https://x.com/dewcode)
+# Lint
+bun lint
+```
+
+## License
+
+MIT
