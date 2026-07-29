@@ -7,37 +7,27 @@
 
 ---
 
-**DEWCode** is a terminal AI coding assistant with two modes: **Plan** (read-only) and **Build** (full access). It includes a multi-agent system, skill system, and supports 9router as its default provider.
+**DEWCode** is an AI coding assistant for the terminal. Built as a fork of [opencode](https://github.com/anomalyco/opencode), customized with DEWCode branding and 9router provider integration.
 
 ## Features
 
-- **Plan Mode** — Read-only analysis, safe for exploring unfamiliar codebases
-- **Build Mode** — Full access to read, write, and execute code
-- **Multi-agent** — Switch between specialized agents with different capabilities
-- **Skill System** — Load technical skills on-demand (security, API, cloud, etc.)
+- **Interactive TUI** — Full terminal UI with agent/tool switching
+- **Multi-agent** — Switch between built-in agents for different tasks
+- **MCP Support** — Model Context Protocol server integration
+- **Multi-provider** — Supports OpenAI, Anthropic, Google, and 9router
 - **Cross-platform** — Works on Linux, macOS, Windows, and Termux
 
 ## Install
 
-### From Source (recommended)
+### From Source
 
-**Prerequisites:** [Node.js](https://nodejs.org) 18+ and [Bun](https://bun.sh) (for dev mode)
+**Prerequisites:** [Node.js](https://nodejs.org) 18+, [Bun](https://bun.sh)
 
 ```bash
 git clone https://github.com/heydeden/dewcode
 cd dewcode
 bun install
 bun dev
-```
-
-### Global Install (for daily use)
-
-```bash
-git clone https://github.com/heydeden/dewcode
-cd dewcode
-bun install
-npm install -g .
-dewcode  # runs from anywhere
 ```
 
 ### Curl Install (Linux/macOS)
@@ -49,59 +39,16 @@ curl -fsSL https://raw.githubusercontent.com/heydeden/dewcode/main/install | bas
 ## Quick Start
 
 ```bash
-dewcode                        # interactive mode
-dewcode -t "explain main.go"   # single task
-dewcode --doctor               # check install status
+dewcode                          # start interactive TUI
+dewcode -m provider/model        # start with specific model
+dewcode -c                       # continue last session
+dewcode doctor                   # check install status
+dewcode models list              # list available models
 ```
-
-### Commands
-
-| Command | Description |
-|---------|-------------|
-| `/plan` | Switch to plan mode (read-only) |
-| `/build` | Switch to build mode (full access) |
-| `/mode` | Show current mode |
-| `/skill <name>` | Load a skill |
-| `/skills` | List available skills |
-| `/unskill <name>` | Unload a skill |
-| `/agent <name>` | Switch agent |
-| `/agents` | List agents |
-| `/default` | Back to default |
-| `/clear` | Reset conversation |
-| `/help` | Show help |
-| `/exit` | Exit |
-
-### Available Agents
-
-- `@fullstack-developer` — Full-stack development agent
-- `@sec-bounty` — Bug bounty hunting agent
-- `@sec-web` — Web security audit agent
-- `@sec-polar` — Hunt-fix cycle agent
-
-### Available Skills
-
-- `sec-api` — API security testing
-- `sec-recon` — Reconnaissance & OSINT
-- `sec-exploit` — Exploit payloads & techniques
-- `sec-cloud` — Cloud attack vectors
-- `sec-bypass` — WAF & filter bypass
-- `sec-proxy` — Proxy & Tor configuration
-- `md2pdf` — Markdown to PDF conversion
 
 ## Configuration
 
-### API Key
-
-```bash
-# Option 1: CLI flags
-dewcode --api-key <key> --model <model>
-
-# Option 2: Environment variables
-export DEWCODE_API_KEY=<key>
-export DEWCODE_MODEL=<model>
-
-# Option 3: Config file (~/.config/dewcode/dewcode.json)
-```
+API key and model are configured via config file or environment variables.
 
 ### Config File
 
@@ -121,23 +68,43 @@ Located at `~/.config/dewcode/dewcode.json`:
 }
 ```
 
+### Environment Variables
+
+```bash
+DEWCODE_API_KEY=your-api-key
+DEWCODE_BASE_URL=http://127.0.0.1:20128/v1
+```
+
 ### Running 9router
 
 DEWCode uses [9router](https://github.com/heydeden/9router) as its default provider.
 
 ```bash
-# Install 9router
 npm install -g 9router
-
-# Run 9router (default port 20128)
 node $(npm root -g)/9router/cli.js --tray --skip-update -p 20128
 ```
+
+## CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `dewcode` | Start interactive TUI |
+| `dewcode doctor` | Check install status |
+| `dewcode models list` | List available models |
+| `dewcode config set` | Set configuration |
+| `dewcode mcp add` | Add MCP server |
+| `dewcode mcp list` | List MCP servers |
+| `dewcode agent create` | Create a new agent |
+| `dewcode skill list` | List available skills |
+| `dewcode export` | Export session data |
+| `dewcode pr <number>` | Checkout and run from PR |
+| `dewcode upgrade` | Upgrade DEWCode |
 
 ## Project Structure
 
 ```
 dewcode/
-├── packages/dewcode/   # CLI & TUI entry point
+├── packages/dewcode/   # CLI entry point & core
 ├── packages/core/      # Core logic
 ├── packages/tui/       # Terminal UI components
 ├── packages/ui/        # Shared UI primitives
@@ -151,14 +118,9 @@ dewcode/
 ## Development
 
 ```bash
-# Dev mode (interactive TUI)
-bun dev
-
-# Type check
-bun turbo typecheck
-
-# Lint
-bun lint
+bun dev                  # start dev TUI
+bun turbo typecheck      # type check all packages
+bun lint                 # lint code
 ```
 
 ## License
