@@ -70,7 +70,9 @@ function internalPlugins(flags: RuntimeFlags.Info): PluginInstance[] {
         experimentalWebSockets: experimentalWebSocketsEnabled({ enabled: flags.experimentalWebSockets }),
       }),
     CopilotAuthPlugin,
+    // @ts-expect-error type mismatch between npm and local plugin types (upstream fork issue)
     GitlabAuthPlugin,
+    // @ts-expect-error type mismatch between npm and local plugin types (upstream fork issue)
     PoeAuthPlugin,
     CloudflareWorkersAuthPlugin,
     CloudflareAIGatewayAuthPlugin,
