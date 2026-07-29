@@ -11,7 +11,7 @@ export function Header(props: { zen?: boolean; go?: boolean; hideGetStarted?: bo
   const i18n = useI18n()
   const language = useLanguage()
 
-  const [store] = createStore({
+  const [store, setStore] = createStore({
     mobileMenuOpen: false,
   })
 
