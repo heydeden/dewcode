@@ -127,19 +127,19 @@
     --v2-cyan-1100: #004756ff;
     --v2-cyan-1200: #00353fff;
 
-    /* ── Blue ── */
-    --v2-blue-100: #ecf1feff;
-    --v2-blue-200: #d7e2fcff;
-    --v2-blue-300: #c3d4fdff;
-    --v2-blue-400: #a2bcffff;
-    --v2-blue-500: #7698fdff;
-    --v2-blue-600: #3b5cf6ff;
-    --v2-blue-700: #3250dfff;
-    --v2-blue-800: #2c47c8ff;
-    --v2-blue-900: #263fa9ff;
-    --v2-blue-1000: #22388fff;
-    --v2-blue-1100: #1c2e70ff;
-    --v2-blue-1200: #1b2852ff;
+    /* ── Blue (redefined to Forest/Green for DEWCode brand) ── */
+    --v2-blue-100: #e8f5e9ff;
+    --v2-blue-200: #c8e6c9ff;
+    --v2-blue-300: #a5d6a7ff;
+    --v2-blue-400: #81c784ff;
+    --v2-blue-500: #66bb6aff;
+    --v2-blue-600: #2a7d4fff;
+    --v2-blue-700: #1e5f3aff;
+    --v2-blue-800: #1a4f30ff;
+    --v2-blue-900: #154026ff;
+    --v2-blue-1000: #10301dff;
+    --v2-blue-1100: #0c2014ff;
+    --v2-blue-1200: #08100aff;
 
     /* ── Purple ── */
     --v2-purple-100: #ebecfeff;

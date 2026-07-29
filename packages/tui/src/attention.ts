@@ -38,8 +38,8 @@ type TuiAttentionHost = TuiAttention & {
   dispose(): void
 }
 
-const DEFAULT_TITLE = "dewcode"
-const DEFAULT_PACK_ID = "dewcode.default"
+const DEFAULT_TITLE = "DEWCode"
+const DEFAULT_PACK_ID = "DEWCode.default"
 const KV_SOUND_PACK = "attention_sound_pack"
 const TITLE_LIMIT = 80
 const MESSAGE_LIMIT = 240

@@ -17,10 +17,6 @@
       "dependsOn": ["^build"],
       "outputs": []
     },
-    "@dewcode-ai/app#test": {
-      "dependsOn": ["^build"],
-      "outputs": []
-    },
     "@dewcode-ai/ui#test": {
       "dependsOn": ["^build"],
       "outputs": []
