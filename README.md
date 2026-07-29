@@ -19,21 +19,26 @@
 
 ## Install
 
-### From Source
+### Prerequisites
 
-**Prerequisites:** [Node.js](https://nodejs.org) 18+, [Bun](https://bun.sh)
+- [Node.js](https://nodejs.org) 18+
+- [Bun](https://bun.sh) — `curl -fsSL https://bun.sh | bash`
+
+### Quick Install
 
 ```bash
 git clone https://github.com/heydeden/dewcode
 cd dewcode
 bun install
-bun dev
+npm install -g .
+dewcode                         # start interactive TUI
 ```
 
-### Curl Install (Linux/macOS)
+### Curl Install (Linux/macOS, binary release)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/heydeden/dewcode/main/install | bash
+dewcode
 ```
 
 ## Quick Start

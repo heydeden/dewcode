@@ -187,13 +187,36 @@ function findBinary(startDir) {
 }
 
 const resolved = envPath || (fs.existsSync(cached) ? cached : findBinary(scriptDir))
-if (!resolved) {
+if (resolved) {
+  run(resolved)
+} else {
+  const pkgDir = path.resolve(scriptDir, "..")
+  const entry = path.join(pkgDir, "src/index.ts")
+  const bunNames = process.platform === "win32" ? ["bun.exe", "bun"] : ["bun"]
+
+  for (const name of bunNames) {
+    const which = childProcess.spawnSync(process.platform === "win32" ? "where" : "which", [name], { encoding: "utf8" })
+    if (which.status === 0 && which.stdout.trim()) {
+      const args = ["run", "--cwd", pkgDir, "--conditions=browser", entry, ...process.argv.slice(2)]
+      const child = childProcess.spawn(which.stdout.trim().split("\n")[0].trim(), args, { stdio: "inherit" })
+      child.on("exit", (code, signal) => {
+        if (signal) process.kill(process.pid, signal)
+        else process.exit(typeof code === "number" ? code : 0)
+      })
+      return
+    }
+  }
+
   console.error(
-    "It seems that your package manager failed to install the right version of the dewcode CLI for your platform. You can try manually installing " +
-      names.map((n) => `\"${n}\"`).join(" or ") +
-      " package",
+    "DEWCode requires Bun to run from source.\n" +
+    "Install Bun: https://bun.sh (curl -fsSL https://bun.sh | bash)\n" +
+    "Or for npm installs, install Bun first.\n" +
+    "\n" +
+    "Once Bun is installed:\n" +
+    "  cd dewcode\n" +
+    "  bun install\n" +
+    "  npm install -g .\n" +
+    "  dewcode\n"
   )
   process.exit(1)
 }
-
-run(resolved)
