@@ -243,7 +243,9 @@ export function deriveInactiveColor(brightColor: ColorInput, factor: number = 0.
   return RGBA.fromValues(baseRgba.r, baseRgba.g, baseRgba.b, factor)
 }
 
-export type KnightRiderStyle = "blocks" | "diamonds"
+export type KnightRiderStyle = "blocks" | "diamonds" | "pulse"
+
+const PULSE_FRAMES = ["·", "∘", "○", "◍", "●", "◍", "○", "∘"]
 
 export interface KnightRiderOptions {
   width?: number
@@ -270,8 +272,10 @@ export interface KnightRiderOptions {
  * @returns Array of frame strings
  */
 export function createFrames(options: KnightRiderOptions = {}): string[] {
-  const width = options.width ?? 8
   const style = options.style ?? "diamonds"
+  if (style === "pulse") return PULSE_FRAMES
+
+  const width = options.width ?? 8
   const holdStart = options.holdStart ?? 30
   const holdEnd = options.holdEnd ?? 9
 
@@ -334,6 +338,7 @@ export function createFrames(options: KnightRiderOptions = {}): string[] {
  * @returns ColorGenerator function
  */
 export function createColors(options: KnightRiderOptions = {}): ColorGenerator {
+  const style = options.style ?? "blocks"
   const holdStart = options.holdStart ?? 30
   const holdEnd = options.holdEnd ?? 9
 
@@ -353,6 +358,11 @@ export function createColors(options: KnightRiderOptions = {}): ColorGenerator {
   const defaultColor =
     options.defaultColor ??
     (options.color ? deriveInactiveColor(options.color, options.inactiveFactor) : RGBA.fromHex("#330000"))
+
+  if (style === "pulse") {
+    const bright = colors[0] ?? defaultColor
+    return () => bright
+  }
 
   const trailOptions = {
     colors,
