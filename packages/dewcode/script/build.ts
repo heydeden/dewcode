@@ -236,11 +236,18 @@ if (Script.release) {
   for (const key of Object.keys(binaries)) {
     if (key.includes("linux")) {
       await $`tar -czf ../../${key}.tar.gz *`.cwd(`dist/${key}/bin`)
+    } else if (process.platform === "win32") {
+      // `zip` is not available on Windows runners; PowerShell is.
+      await $`powershell -NoProfile -Command "Compress-Archive -Path '*' -DestinationPath '../../${key}.zip' -Force"`.cwd(
+        `dist/${key}/bin`,
+      )
     } else {
       await $`zip -r ../../${key}.zip *`.cwd(`dist/${key}/bin`)
     }
   }
-  await $`gh release upload v${Script.version} ./dist/*.zip ./dist/*.tar.gz --clobber --repo ${process.env.GH_REPO}`
+  if (process.env.GH_REPO) {
+    await $`gh release upload v${Script.version} ./dist/*.zip ./dist/*.tar.gz --clobber --repo ${process.env.GH_REPO}`
+  }
 }
 
 export { binaries }

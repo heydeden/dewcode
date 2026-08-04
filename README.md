@@ -19,36 +19,43 @@
 
 ## Install
 
-### Prerequisites
+Binary releases are built automatically from the `main` branch via GitHub Actions and attached to
+[GitHub Releases](https://github.com/heydeden/dewcode/releases).
 
-- [Node.js](https://nodejs.org) 18+
-- [Bun](https://bun.sh) — `curl -fsSL https://bun.sh | bash`
-
-### Quick Install
-
-```bash
-git clone https://github.com/heydeden/dewcode
-cd dewcode
-bun install
-npm install -g .
-dewcode                         # start interactive TUI
-```
-
-### Curl Install (Linux/macOS, binary release)
+### Linux / macOS (binary)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/heydeden/dewcode/main/install | bash
 dewcode
 ```
 
-## Update
+### Windows (binary)
+
+```powershell
+irm https://raw.githubusercontent.com/heydeden/dewcode/main/install.ps1 | iex
+dewcode
+```
+
+### From source
+
+Requires [Bun](https://bun.sh) 1.3+:
 
 ```bash
-cd /path/to/dewcode
-git pull
+git clone https://github.com/heydeden/dewcode
+cd dewcode
 bun install
-npm install -g .
+cd packages/dewcode
+bun run build --single --skip-embed-web-ui   # binary at dist/dewcode-<os>-<arch>/bin/
 ```
+
+For day-to-day development, `bun dev` from `packages/dewcode` runs the TUI directly from source.
+
+## Update
+
+- **Binary installs** — `dewcode upgrade` re-runs the installer and fetches the latest release.
+  The TUI also offers an auto-update prompt when a new release is published.
+- **From source** — `git pull` then `bun install` (rebuild with `bun run build` if you installed
+  the compiled binary).
 
 ## Quick Start
 

@@ -144,6 +144,35 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
 
     const upgradeCurl = Effect.fnUntraced(
       function* (target: string) {
+        if (process.platform === "win32") {
+          const script = "https://raw.githubusercontent.com/heydeden/dewcode/main/install.ps1"
+          const result = yield* appProcess.run(
+            ChildProcess.make(
+              "powershell",
+              [
+                "-NoProfile",
+                "-NonInteractive",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-Command",
+                `$env:VERSION='${target}'; iex ((Invoke-WebRequest -UseBasicParsing '${script}').Content)`,
+              ],
+              { extendEnv: true },
+            ),
+          )
+          if (result.exitCode !== 0) {
+            return yield* new UpgradeFailedError({ stderr: upgradeFailure("curl", {
+              code: result.exitCode,
+              stdout: result.stdout.toString("utf8"),
+              stderr: result.stderr.toString("utf8"),
+            }) })
+          }
+          return yield* Effect.succeed({
+            code: result.exitCode,
+            stdout: result.stdout.toString("utf8"),
+            stderr: result.stderr.toString("utf8"),
+          })
+        }
         const response = yield* httpOk.execute(
           HttpClientRequest.get("https://raw.githubusercontent.com/heydeden/dewcode/main/install"),
         )
