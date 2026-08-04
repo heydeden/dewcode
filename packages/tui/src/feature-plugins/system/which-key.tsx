@@ -105,8 +105,8 @@ function skin(api: TuiPluginApi): Skin {
     muted: ink(api, "textMuted", "#a5a5a5"),
     subtle: ink(api, "borderSubtle", "#6f6f6f"),
     key: ink(api, "warning", "#ffd75f"),
-    accent: ink(api, "primary", "#5f87ff"),
-    tab: ink(api, "primary", "#5f87ff"),
+    accent: ink(api, "primary", "#8b7cd1"),
+    tab: ink(api, "primary", "#8b7cd1"),
     tabText: ink(api, "selectedListItemText", "#ffffff"),
   }
 }
